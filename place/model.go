@@ -1,4 +1,4 @@
-package main
+package place
 
 type Places struct {
 	Id   int    `form:"id" json:"id"`

@@ -1,17 +1,19 @@
-package main
+package place
 
 import (
 	"encoding/json"
 	"log"
 	"net/http"
+
+	"github.com/fannyhasbi/bus-schedule-rest-go/data"
 )
 
-func returnPlaces(w http.ResponseWriter, r *http.Request) {
+func ReturnPlaces(w http.ResponseWriter, r *http.Request) {
 	var places Places
 	var arr_place []Places
 	var response ResponsePlaces
 
-	db := connect()
+	db := data.Connect()
 	defer db.Close()
 
 	rows, err := db.Query("SELECT * FROM tempat")
