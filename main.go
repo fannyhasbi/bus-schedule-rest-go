@@ -2,7 +2,11 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/mux"
 )
 
 const PORT = ":8080"
@@ -13,10 +17,10 @@ func handleIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", handleIndex)
-	err := http.ListenAndServe(PORT, nil)
+	router := mux.NewRouter()
+	router.HandleFunc("/place", returnPlaces).Methods("GET")
+	http.Handle("/", router)
 
-	if err != nil {
-		fmt.Println("Error")
-	}
+	fmt.Printf("Connected to port %d", PORT)
+	log.Fatal(http.ListenAndServe(PORT, router))
 }
