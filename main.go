@@ -23,6 +23,7 @@ func handleIndex(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	router := mux.NewRouter()
+
 	router.HandleFunc("/", handleIndex).Methods("GET", "POST")
 	router.HandleFunc("/api/place", place.ReturnPlaces).Methods("GET")
 	router.HandleFunc("/api/bus", bus.ReturnBuses).Methods("GET")
