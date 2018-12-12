@@ -8,9 +8,10 @@ import (
 	"github.com/fannyhasbi/bus-schedule-rest-go/data"
 )
 
+// ReturnPlaces is handler function to return places
 func ReturnPlaces(w http.ResponseWriter, r *http.Request) {
 	var place Place
-	var arr_places []Place
+	var arrPlaces []Place
 	var response ResponsePlace
 
 	db := data.Connect()
@@ -22,17 +23,17 @@ func ReturnPlaces(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for rows.Next() {
-		if err := rows.Scan(&place.Id, &place.Nama); err != nil {
+		if err := rows.Scan(&place.ID, &place.Nama); err != nil {
 			log.Fatal(err.Error())
 
 		} else {
-			arr_places = append(arr_places, place)
+			arrPlaces = append(arrPlaces, place)
 		}
 	}
 
 	response.Status = 200
 	response.Message = "OK"
-	response.Data = arr_places
+	response.Data = arrPlaces
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
