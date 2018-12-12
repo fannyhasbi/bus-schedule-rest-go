@@ -11,9 +11,10 @@ import (
 	"github.com/fannyhasbi/bus-schedule-rest-go/data"
 )
 
+// ReturnDepartures is handler function to return departure schedule
 func ReturnDepartures(w http.ResponseWriter, r *http.Request) {
 	var departure Departure
-	var arr_departures []Departure
+	var arrDepartures []Departure
 	var response ResponseDeparture
 
 	db := data.Connect()
@@ -41,29 +42,30 @@ func ReturnDepartures(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for rows.Next() {
-		if err := rows.Scan(&departure.Id,
-			&departure.Id_Perusahaan,
-			&departure.Nama_Perusahaan,
-			&departure.Id_Tujuan,
-			&departure.Nama_Tujuan,
-			&departure.Id_Asal,
-			&departure.Nama_Asal,
+		if err := rows.Scan(&departure.ID,
+			&departure.IDPerusahaan,
+			&departure.NamaPerusahaan,
+			&departure.IDTujuan,
+			&departure.NamaTujuan,
+			&departure.IDAsal,
+			&departure.NamaAsal,
 			&departure.Berangkat,
 			&departure.Sampai); err != nil {
 			log.Fatal(err.Error())
 		} else {
-			arr_departures = append(arr_departures, departure)
+			arrDepartures = append(arrDepartures, departure)
 		}
 	}
 
 	response.Status = 200
 	response.Message = "OK"
-	response.Data = arr_departures
+	response.Data = arrDepartures
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
 }
 
+// AddDeparture is a handler function to add departure schedule
 func AddDeparture(w http.ResponseWriter, r *http.Request) {
 	var response ResponseAddDeparture
 
@@ -86,9 +88,9 @@ func AddDeparture(w http.ResponseWriter, r *http.Request) {
 	db := data.Connect()
 	defer db.Close()
 
-	id_perusahaan, _ := strconv.Atoi(f("id_perusahaan"))
-	id_tujuan, _ := strconv.Atoi(f("id_tujuan"))
-	id_asal, _ := strconv.Atoi(f("id_asal"))
+	idPerusahaan, _ := strconv.Atoi(f("id_perusahaan"))
+	idTujuan, _ := strconv.Atoi(f("id_tujuan"))
+	idAsal, _ := strconv.Atoi(f("id_asal"))
 
 	t := time.Now()
 	now := t.Format("2006-01-02")
@@ -96,7 +98,7 @@ func AddDeparture(w http.ResponseWriter, r *http.Request) {
 	berangkat := fmt.Sprintf("%s %s", now, f("berangkat"))
 	sampai := fmt.Sprintf("%s %s", now, f("sampai"))
 
-	query := fmt.Sprintf("INSERT INTO keberangkatan VALUES (null, %d, %d, %d, '%s', '%s')", id_perusahaan, id_tujuan, id_asal, berangkat, sampai)
+	query := fmt.Sprintf("INSERT INTO keberangkatan VALUES (null, %d, %d, %d, '%s', '%s')", idPerusahaan, idTujuan, idAsal, berangkat, sampai)
 
 	_, err := db.Exec(query)
 	if err != nil {

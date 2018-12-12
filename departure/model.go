@@ -1,23 +1,26 @@
 package departure
 
+// Departure struct represents single data of departure schedule
 type Departure struct {
-	Id              int    `json:"id"`
-	Id_Perusahaan   int    `json:"id_perusahaan"`
-	Nama_Perusahaan string `json:"nama_perusahaan"`
-	Id_Tujuan       int    `json:"id_tujuan"`
-	Nama_Tujuan     string `json:"nama_tujuan"`
-	Id_Asal         int    `json:"id_asal"`
-	Nama_Asal       string `json:"nama_asal"`
-	Berangkat       string `json:"berangkat"`
-	Sampai          string `json:"sampai"`
+	ID             int    `json:"id"`
+	IDPerusahaan   int    `json:"id_perusahaan"`
+	NamaPerusahaan string `json:"nama_perusahaan"`
+	IDTujuan       int    `json:"id_tujuan"`
+	NamaTujuan     string `json:"nama_tujuan"`
+	IDAsal         int    `json:"id_asal"`
+	NamaAsal       string `json:"nama_asal"`
+	Berangkat      string `json:"berangkat"`
+	Sampai         string `json:"sampai"`
 }
 
+// ResponseDeparture struct represents departure data followed by HTTP status
 type ResponseDeparture struct {
 	Status  int         `json:"status"`
 	Message string      `json:"message"`
 	Data    []Departure `json:"data"`
 }
 
+// ResponseAddDeparture struct represents null data followed by HTTP status
 type ResponseAddDeparture struct {
 	Status  int         `json:"status"`
 	Message string      `json:"message"`
