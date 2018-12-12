@@ -41,6 +41,15 @@ func ReturnBuses(w http.ResponseWriter, r *http.Request) {
 func AddBus(w http.ResponseWriter, r *http.Request) {
 	var response ResponseAddBus
 
+	if len(r.FormValue("perusahaan")) == 0 {
+		response.Status = 400
+		response.Message = "Bad Request"
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+
 	db := data.Connect()
 	defer db.Close()
 
