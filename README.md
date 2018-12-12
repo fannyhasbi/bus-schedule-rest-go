@@ -1,6 +1,22 @@
 # Bus Schedule REST Go
 RESTful website built with Go to support [Bus Schedule React](https://github.com/fannyhasbi/bus-schedule-react)
 
+---
+
+* [Entity Relationship Diagram](#entity-relationship-diagram)
+* [Pre-Installation](#pre-installation)
+* [Installation](#installation)
+* [Request](#request)
+  * [Bus](#bus)
+  * [Add Bus](#add-bus)
+  * [Place](#place)
+  * [Departure](#departure)
+  * [Add Departure](#add-departure)
+  * [Arrival](#arrival)
+  * [Add Arrival](#add-arrival)
+
+---
+
 ## Entity Relationship Diagram
 Here I create my own ERD for the application
 
@@ -15,20 +31,12 @@ go get github.com/gorilla/mux
 ```
 
 ## Installation
-1. Move to your `GOPATH`. (It depends on where you put the `GOPATH` or project folder when you installed it)
+1. Get the project from this repository
+   ```bash
+   go get github.com/fannyhasbi/bus-schedule-rest-go
+   ```
 
-   > example: `/home/yourusername/go` or `D:\go`
-2. Make a new directory called `fannyhasbi` inside `yourgopath/github.com/`
-   ```bash
-   mkdir -p yourgopath/github.com/fannyhasbi
-   ```
-3. **Clone** or **Download** this repository into the new directory
-   ```bash
-   cd yourgopath/github.com/fannyhasbi
-   
-   git clone https://github.com/fannyhasbi/bus-schedule-rest-go
-   ```
-4. To run, just simply type this command
+2. Move to the cloned project (`yourgopathfolder/src/github.com/fannyhasbi/bus-schedule-rest-go`), then run this command:
    ```bash
    go run main.go
    ```
