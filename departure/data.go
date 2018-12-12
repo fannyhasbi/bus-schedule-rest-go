@@ -86,15 +86,15 @@ func AddDeparture(w http.ResponseWriter, r *http.Request) {
 	db := data.Connect()
 	defer db.Close()
 
-	id_perusahaan, _ := strconv.Atoi(r.FormValue("id_perusahaan"))
-	id_tujuan, _ := strconv.Atoi(r.FormValue("id_tujuan"))
-	id_asal, _ := strconv.Atoi(r.FormValue("id_asal"))
+	id_perusahaan, _ := strconv.Atoi(f("id_perusahaan"))
+	id_tujuan, _ := strconv.Atoi(f("id_tujuan"))
+	id_asal, _ := strconv.Atoi(f("id_asal"))
 
 	t := time.Now()
 	now := t.Format("2006-01-02")
 
-	berangkat := fmt.Sprintf("%s %s", now, r.FormValue("berangkat"))
-	sampai := fmt.Sprintf("%s %s", now, r.FormValue("sampai"))
+	berangkat := fmt.Sprintf("%s %s", now, f("berangkat"))
+	sampai := fmt.Sprintf("%s %s", now, f("sampai"))
 
 	query := fmt.Sprintf("INSERT INTO keberangkatan VALUES (null, %d, %d, %d, '%s', '%s')", id_perusahaan, id_tujuan, id_asal, berangkat, sampai)
 
