@@ -2,8 +2,11 @@ package arrival
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/fannyhasbi/bus-schedule-rest-go/data"
 )
@@ -56,6 +59,59 @@ func ReturnArrivals(w http.ResponseWriter, r *http.Request) {
 	response.Status = 200
 	response.Message = "OK"
 	response.Data = arr_arrivals
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+func AddArrival(w http.ResponseWriter, r *http.Request) {
+	var response ResponseAddArrival
+
+	f := r.FormValue
+
+	if !(len(f("id_perusahaan")) > 0 &&
+		len(f("id_tujuan")) > 0 &&
+		len(f("id_asal")) > 0 &&
+		len(f("berangkat")) > 0 &&
+		len(f("datang")) > 0) {
+
+		response.Status = 400
+		response.Message = "Bad Request"
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+
+	db := data.Connect()
+	defer db.Close()
+
+	id_perusahaan, _ := strconv.Atoi(f("id_perusahaan"))
+	id_tujuan, _ := strconv.Atoi(f("id_tujuan"))
+	id_asal, _ := strconv.Atoi(f("id_asal"))
+
+	t := time.Now()
+	now := t.Format("2006-01-02")
+
+	berangkat := fmt.Sprintf("%s %s", now, f("berangkat"))
+	datang := fmt.Sprintf("%s %s", now, f("datang"))
+
+	query := fmt.Sprintf("INSERT INTO kedatangan VALUES (null, %d, %d, %d, '%s', '%s')", id_perusahaan, id_tujuan, id_asal, berangkat, datang)
+
+	_, err := db.Exec(query)
+	if err != nil {
+		response.Status = 500
+		response.Message = "Internal Server Error"
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(response)
+
+		log.Println(err)
+		return
+	}
+
+	response.Status = 200
+	response.Message = "OK"
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)

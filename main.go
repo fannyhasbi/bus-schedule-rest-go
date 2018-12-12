@@ -34,6 +34,7 @@ func main() {
 	router.HandleFunc("/api/add-departure", departure.AddDeparture).Methods("POST")
 
 	router.HandleFunc("/api/arrival", arrival.ReturnArrivals).Methods("GET")
+	router.HandleFunc("/api/add-arrival", arrival.AddArrival).Methods("POST")
 	http.Handle("/", router)
 
 	fmt.Printf("Connected to port %v", PORT)

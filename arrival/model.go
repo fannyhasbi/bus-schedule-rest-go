@@ -17,3 +17,9 @@ type ResponseArrival struct {
 	Message string    `json:"message"`
 	Data    []Arrival `json:"data"`
 }
+
+type ResponseAddArrival struct {
+	Status  int         `json:"status"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
