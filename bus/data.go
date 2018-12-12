@@ -9,9 +9,10 @@ import (
 	"github.com/fannyhasbi/bus-schedule-rest-go/data"
 )
 
+// ReturnBuses is handler function to return buses
 func ReturnBuses(w http.ResponseWriter, r *http.Request) {
 	var bus Bus
-	var arr_buses []Bus
+	var arrBuses []Bus
 	var response ResponseBus
 
 	db := data.Connect()
@@ -26,18 +27,19 @@ func ReturnBuses(w http.ResponseWriter, r *http.Request) {
 		if err := rows.Scan(&bus.Id, &bus.Nama); err != nil {
 			log.Fatal(err.Error())
 		} else {
-			arr_buses = append(arr_buses, bus)
+			arrBuses = append(arrBuses, bus)
 		}
 	}
 
 	response.Status = 200
 	response.Message = "OK"
-	response.Data = arr_buses
+	response.Data = arrBuses
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
 }
 
+// AddBus is a handler function to add bus
 func AddBus(w http.ResponseWriter, r *http.Request) {
 	var response ResponseAddBus
 
