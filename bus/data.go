@@ -24,7 +24,7 @@ func ReturnBuses(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for rows.Next() {
-		if err := rows.Scan(&bus.Id, &bus.Nama); err != nil {
+		if err := rows.Scan(&bus.ID, &bus.Nama); err != nil {
 			log.Fatal(err.Error())
 		} else {
 			arrBuses = append(arrBuses, bus)
