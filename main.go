@@ -26,9 +26,13 @@ func main() {
 
 	router.HandleFunc("/", handleIndex).Methods("GET", "POST")
 	router.HandleFunc("/api/place", place.ReturnPlaces).Methods("GET")
+
 	router.HandleFunc("/api/bus", bus.ReturnBuses).Methods("GET")
 	router.HandleFunc("/api/add-bus", bus.AddBus).Methods("POST")
+
 	router.HandleFunc("/api/departure", departure.ReturnDepartures).Methods("GET")
+	router.HandleFunc("/api/add-departure", departure.AddDeparture).Methods("POST")
+
 	router.HandleFunc("/api/arrival", arrival.ReturnArrivals).Methods("GET")
 	http.Handle("/", router)
 

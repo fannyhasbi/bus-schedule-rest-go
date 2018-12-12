@@ -17,3 +17,9 @@ type ResponseDeparture struct {
 	Message string      `json:"message"`
 	Data    []Departure `json:"data"`
 }
+
+type ResponseAddDeparture struct {
+	Status  int         `json:"status"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
