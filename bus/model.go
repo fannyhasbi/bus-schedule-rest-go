@@ -10,3 +10,13 @@ type ResponseBus struct {
 	Message string `json:"message"`
 	Data    []Bus  `json:"data"`
 }
+
+type Perusahaan struct {
+	Nama string `json:"perusahaan"`
+}
+
+type ResponseAddBus struct {
+	Status  int         `json:"status"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}

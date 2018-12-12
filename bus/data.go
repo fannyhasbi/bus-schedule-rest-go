@@ -2,6 +2,7 @@ package bus
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -32,6 +33,34 @@ func ReturnBuses(w http.ResponseWriter, r *http.Request) {
 	response.Status = 200
 	response.Message = "OK"
 	response.Data = arr_buses
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+func AddBus(w http.ResponseWriter, r *http.Request) {
+	var response ResponseAddBus
+
+	db := data.Connect()
+	defer db.Close()
+
+	perusahaan := r.FormValue("perusahaan")
+	query := fmt.Sprintf("INSERT INTO perusahaan (nama) VALUES ('%s')", perusahaan)
+
+	_, err := db.Exec(query)
+	if err != nil {
+		response.Status = 500
+		response.Message = "Internal Server Error"
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(response)
+
+		log.Println(err)
+		return
+	}
+
+	response.Status = 200
+	response.Message = "OK"
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
